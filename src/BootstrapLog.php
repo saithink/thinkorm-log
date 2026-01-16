@@ -22,7 +22,7 @@ class BootstrapLog implements Bootstrap
         }
         // 进行监听处理
         Db::listen(function($sql, $runtime) use ($config) {
-            if ($sql === 'select 1') {
+            if ($sql === 'select 1' || $sql === 'SELECT 1 AS ping' || $sql === 'SELECT 1 AS ping FROM DUAL') {
                 // 心跳
                 return;
             }
