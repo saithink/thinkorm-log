@@ -1,6 +1,9 @@
 <?php
-namespace Saithink\ThinkOrmLog;
+namespace Guozhijian611\ThinkOrmLog;
 
+/**
+ * 插件安装
+ */
 class Install
 {
     const WEBMAN_PLUGIN = true;
@@ -9,7 +12,7 @@ class Install
      * @var array
      */
     protected static $pathRelation = [
-        'config/plugin/saithink/thinkorm-log' => 'config/plugin/saithink/thinkorm-log',
+        'config/plugin/guozhijian611/thinkorm-log' => 'config/plugin/guozhijian611/thinkorm-log',
     ];
 
     /**
@@ -19,6 +22,16 @@ class Install
     public static function install()
     {
         static::installByRelation();
+        
+        // 创建日志目录
+        $logPath = runtime_path() . '/logs';
+        if (!is_dir($logPath)) {
+            mkdir($logPath, 0755, true);
+        }
+
+        echo "ThinkOrm日志插件安装完成！\n";
+        echo "配置文件位置：config/plugin/guozhijian611/thinkorm-log/app.php\n";
+        echo "日志文件位置：{$logPath}/sql.log, {$logPath}/api.log\n";
     }
 
     /**
@@ -28,6 +41,7 @@ class Install
     public static function uninstall()
     {
         self::uninstallByRelation();
+        echo "ThinkOrm日志插件卸载完成！\n";
     }
 
     /**
@@ -43,9 +57,8 @@ class Install
                     mkdir($parent_dir, 0777, true);
                 }
             }
-            //symlink(__DIR__ . "/$source", base_path()."/$dest");
             copy_dir(__DIR__ . "/$source", base_path()."/$dest");
-            echo "Create $dest";
+            echo "Create $dest\n";
         }
     }
 
@@ -60,7 +73,7 @@ class Install
             if (!is_dir($path) && !is_file($path)) {
                 continue;
             }
-            echo "Remove $dest";
+            echo "Remove $dest\n";
             if (is_file($path) || is_link($path)) {
                 unlink($path);
                 continue;
@@ -68,5 +81,4 @@ class Install
             remove_dir($path);
         }
     }
-    
 }

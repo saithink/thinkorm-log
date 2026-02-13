@@ -1,5 +1,5 @@
 <?php
-namespace Saithink\ThinkOrmLog;
+namespace Guozhijian611\ThinkOrmLog;
 
 use Webman\Bootstrap;
 use think\facade\Db;
@@ -12,14 +12,16 @@ class BootstrapLog implements Bootstrap
 {
     public static function start($worker)
     {
-        $config = config('plugin.saithink.thinkorm-log.app', [
+        $config = config('plugin.guozhijian611.thinkorm-log.app', [
             'enable' => true,
-            'console'   => false,
-            'file'  => true,
+            'console'   => true,
+            'file'  => false,
         ]);
+        
         if (!$config['enable']) {
             return;
         }
+        
         // 进行监听处理
         Db::listen(function($sql, $runtime) use ($config) {
             if ($sql === 'select 1' || $sql === 'SELECT 1 AS ping' || $sql === 'SELECT 1 AS ping FROM DUAL') {
@@ -42,7 +44,7 @@ class BootstrapLog implements Bootstrap
             }
             // 记录到日志文件
             if ($config['file']) {
-                Log::channel('plugin.saithink.thinkorm-log.sql')->info($log);
+                Log::channel('plugin.guozhijian611.thinkorm-log.sql')->info($log);
             }
         });
     }

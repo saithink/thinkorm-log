@@ -1,17 +1,46 @@
 {
-    "name": "saithink/thinkorm-log",
-    "description": "基于webman开发的ThinkOrm日志记录插件",
+    "name": "guozhijian611/thinkorm-log",
+    "description": "基于webman开发的ThinkOrm日志记录插件，增强版支持API请求日志记录",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Saithink\\ThinkOrmLog\\": "src/"
+            "Guozhijian611\\ThinkOrmLog\\": "src/"
         }
     },
     "authors": [
         {
-            "name": "saithink",
-            "email": "1430792918@qq.com"
+            "name": "guozhijian611",
+            "email": "allen@gzj2001.com"
         }
-    ]
+    ],
+    "keywords": [
+        "webman",
+        "thinkorm",
+        "log",
+        "api",
+        "middleware"
+    ],
+    "require": {
+        "php": ">=8.0",
+        "workerman/webman-framework": "^1.0|^2.0",
+        "topthink/think-orm": "^2.0|^3.0",
+        "monolog/monolog": "^2.0|^3.0"
+    },
+    "scripts": {
+        "post-package-install": [
+            "Guozhijian611\\ThinkOrmLog\\Install::install"
+        ],
+        "post-package-update": [
+            "Guozhijian611\\ThinkOrmLog\\Install::update"
+        ],
+        "pre-package-uninstall": [
+            "Guozhijian611\\ThinkOrmLog\\Install::uninstall"
+        ]
+    },
+    "extra": {
+        "webman": {
+            "plugin": true
+        }
+    }
 }
